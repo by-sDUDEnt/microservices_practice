@@ -2,7 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser');
-
+var cors = require('cors')
 const PORT = 8080
 const HOST = '0.0.0.0'
 
@@ -14,7 +14,7 @@ let fruits = [
 
 const app = express()
 app.use(bodyParser.json());
-
+app.use(cors());
 app.get('/service1', (req, res) => {
   res.send('boje pomoji')
 })
