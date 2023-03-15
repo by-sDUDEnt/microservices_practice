@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const bodyParser = require('body-parser');
 
 const PORT = 8080
 const HOST = '0.0.0.0'
@@ -12,12 +13,10 @@ let fruits = [
 ];
 
 const app = express()
+app.use(bodyParser.json());
+
 app.get('/service1', (req, res) => {
   res.send('boje pomoji')
-})
-
-app.listen(PORT, HOST, () => {
-  console.log(`Running on http://${HOST}:${PORT}`)
 })
 
 // READ operation
@@ -30,19 +29,17 @@ app.get('/fruits/:id', (req, res) => {
   }
 });
 
+//ALL fruits
+app.get('/fruits', (req, res) => {
+  res.send(fruits);
+});
+
 //CREATE operation
 app.post('/fruits', (req, res) => {
-  const id = fruits.length + 1;
-  const fruit = {
-    id,
-    name: req.body.name,
-    color: req.body.color,
-    weight: req.body.weight
-  };
-
+  const fruit = req.body;
+  fruit.id = fruits.length + 1;
   fruits.push(fruit);
-
-  res.send('Fruit created successfully');
+  res.send(fruit);
 });
 
 // UPDATE operation
@@ -52,8 +49,7 @@ app.put('/fruits/:id', (req, res) => {
     res.status(404).send('Fruit not found');
   } else {
     fruit.name = req.body.name || fruit.name;
-    fruit.color = req.body.color || fruit.color;
-    fruit.weight = req.body.weight || fruit.weight;
+    fruit.count = req.body.count || fruit.count;
 
     res.send('Fruit updated successfully');
   }
@@ -70,3 +66,7 @@ app.delete('/fruits/:id', (req, res) => {
     res.send('Fruit deleted successfully');
   }
 });
+
+app.listen(PORT, HOST, () => {
+  console.log(`Running on http://${HOST}:${PORT}`)
+})

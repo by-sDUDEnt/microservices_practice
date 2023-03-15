@@ -13,7 +13,7 @@ spec:
        app: fruit-service             # мітка Pod по якому вона буде зв'язана з Deployment та Service
     spec:
       containers:
-        - image: ykzza/fruit-service       # образ Docker
+        - image: ykzza/fruit-service-new       # образ Docker
           name: fruit-service           # ім'я контейнеру
           ports:
             - containerPort: 8080  # порт по якому можна звертатись до поди
