@@ -1,2 +1,2 @@
-services/fruit-service/node-modules
-services/veggie-service/node-modules
+services/fruit-service/node_modules
+services/veggie-service/node_modules
