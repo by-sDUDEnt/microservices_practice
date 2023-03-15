@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fruit-service-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /fruits
+            pathType: "Prefix"
+            backend:
+              service:
+                name: service1-service
+                port:
+                  number: 80
