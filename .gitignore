@@ -1,2 +1,4 @@
 services/fruit-service/node_modules
 services/veggie-service/node_modules
+client/node_modules
+

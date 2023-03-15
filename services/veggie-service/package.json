@@ -1,0 +1,13 @@
+{
+  "name": "veggie-service",
+  "version": "1.0.0",
+  "description": "veggie CRUD service",
+  "author": "first last <first.last@example.com>",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}
