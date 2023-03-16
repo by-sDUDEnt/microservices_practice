@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:18-alpine
 
 
 WORKDIR /app
@@ -12,3 +12,6 @@ COPY . .
 EXPOSE 8080
 
 CMD  npm start
+
+# check out for dev pckgs
+#change node
