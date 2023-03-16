@@ -8,30 +8,31 @@ function App() {
   const [service2state, service2SetState] = useState(UNKNOWN);
 
   useEffect(() => {
-    fetch('/vegetables')
+    fetch('http://localhost/vegetables')
         .then((response) => {
+          console.log(response)
             return response.text();
         })
         .then((data) => {
             service1SetState(data);
         })
         .catch((err) => {
-      // service1SetState(UNAVAILABLE)
+      service1SetState(UNAVAILABLE)
       console.log(err)
     });
   }, []);
 
-  // useEffect(() => {
-  //   fetch('/api/service2/ping')
-  //       .then((response) => {
-  //           return response.text();
-  //       })
-  //       .then((data) => {
-  //           service2SetState(data);
-  //       }).catch(() => {
-  //     service2SetState(UNAVAILABLE)
-  //   });
-  // }, []);
+  useEffect(() => {
+    fetch('http://localhost/fruits')
+        .then((response) => {
+            return response.text();
+        })
+        .then((data) => {
+            service2SetState(data);
+        }).catch(() => {
+      service2SetState(UNAVAILABLE)
+    });
+  }, []);
 
   return (
     <div>
