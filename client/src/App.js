@@ -29,8 +29,9 @@ function App() {
         })
         .then((data) => {
             service2SetState(data);
-        }).catch(() => {
+        }).catch((err) => {
       service2SetState(UNAVAILABLE)
+      console.log(err)
     });
   }, []);
 

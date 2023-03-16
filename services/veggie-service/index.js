@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+var cors = require('cors')
 // Hardcoded JSON database of vegetables
 let vegetables = [
   { id: 1, name: 'Carrots', color: 'Orange', quantity: 10 },
@@ -11,6 +11,8 @@ let vegetables = [
 // Initialize express app and middleware
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
+
 
 // CRUD operations
 // Get all vegetables
