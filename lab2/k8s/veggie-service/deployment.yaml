@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veggie-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: veggie-node-app
+  template:
+    metadata:
+     labels:
+       app: veggie-node-app
+    spec:
+      containers:
+        - image: bysdudent/veggie-nodejs
+          name: veggie-node-app
+          ports:
+            - containerPort: 3000

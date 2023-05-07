@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: veggie-node-app-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /vegetables
+            pathType: "Prefix"
+            backend:
+              service:
+                name: veggie-node-app-service
+                port:
+                  number: 80
