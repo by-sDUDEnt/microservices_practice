@@ -12,7 +12,7 @@ let vegetables = [
   { id: 3, name: 'Eggplant', color: 'Purple', quantity: 3 }
 ];
 
-// const client = new Client({
+// const pool = new Pool({
 //   user: "demo",
 //   host: "postgres",
 //   database: "demo",
@@ -30,16 +30,30 @@ const pool = new Pool({
 
 pool.connect()
   .then(() => {
-    return pool.query(`
-      CREATE TABLE IF NOT EXISTS vegetables (
-        id SERIAL PRIMARY KEY,
-        name TEXT NOT NULL,
-        color TEXT NOT NULL,
-        quantity INTEGER NOT NULL
-      )
-    `);
+    return pool.query(
+      // `
+      // CREATE TABLE IF NOT EXISTS vegetables (
+      //   id SERIAL PRIMARY KEY,
+      //   name TEXT NOT NULL,
+      //   color TEXT NOT NULL,
+      //   quantity INTEGER NOT NULL
+      // )
+    // `
+    // `
+    // SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
+    // `
+    `
+      SELECT * from migrations
+    `
+    // `
+    // DROP TABLE IF EXISTS vegatables; 
+    // DROP TABLE IF EXISTS vegetables;
+    // DROP TABLE IF EXISTS roles;
+    // `
+    );
   })
-  .then(() => {
+  .then((res) => {
+    console.log(res)
     console.log('Successfully connected to database and ensured table exists');
   })
   .catch((err) => {

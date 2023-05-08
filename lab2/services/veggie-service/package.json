@@ -5,11 +5,13 @@
   "author": "first last <first.last@example.com>",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "migrate": "node-pg-migrate"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.1",
+    "node-pg-migrate": "^6.2.2",
     "pg": "^8.10.0"
   }
 }
