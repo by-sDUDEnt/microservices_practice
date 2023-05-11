@@ -12,6 +12,16 @@ spec:
      labels:
        app: fruit-service             # мітка Pod по якому вона буде зв'язана з Deployment та Service
     spec:
+      initContainers:
+          - name: run-orders-migrations
+            image: bysdudent/orders-migration:lab2
+            imagePullPolicy: Always
+            command: ["./node_modules/.bin/node-pg-migrate", "up"] # CLI команда запуску міграцій, де $(POSTGRESQL_URL) і $(VERSION) змінні середовища
+            env:
+              - name: DATABASE_URL
+                value: "postgres://demo:demo@postgres:5432/demo"
+              - name: VERSION
+                value: "20211128095755"  
       containers:
         - image: ykzza/fruit-service-new       # образ Docker
           name: fruit-service           # ім'я контейнеру
