@@ -12,21 +12,21 @@ let vegetables = [
   { id: 3, name: 'Eggplant', color: 'Purple', quantity: 3 }
 ];
 
-// const pool = new Pool({
-//   user: "demo",
-//   host: "postgres",
-//   database: "demo",
-//   password: "demo",
-//   port: 5432
-// })
-
 const pool = new Pool({
   user: "demo",
-  host: "localhost",
+  host: "postgres",
   database: "demo",
   password: "demo",
   port: 5432
 })
+
+// const pool = new Pool({
+//   user: "demo",
+//   host: "localhost",
+//   database: "demo",
+//   password: "demo",
+//   port: 5432
+// })
 
 pool.connect()
   .then(() => {
@@ -42,9 +42,17 @@ pool.connect()
     // `
     // SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
     // `
-    `
-      SELECT * from migrations
-    `
+    // `
+    // INSERT INTO vegetables(name, color, quantity) VALUES('potato', 'red', 4) RETURNING * 
+    // `
+    // `
+    // CREATE ROLE exc1 LOGIN PASSWORD 'password' SUPERUSER;
+    // GRANT ALL PRIVILEGES ON DATABASE demo TO exc1;
+// `
+// SELECT * FROM vegetables
+// `
+
+    // `
     // `
     // DROP TABLE IF EXISTS vegatables; 
     // DROP TABLE IF EXISTS vegetables;

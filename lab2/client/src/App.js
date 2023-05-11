@@ -8,7 +8,7 @@ function App() {
   const [deletedVegetableId, setDeletedVegetableId] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/vegetables')
+    axios.get('http://localhost/vegetables')
       .then((response) => {
         setVegetables(response.data);
       })
@@ -18,7 +18,7 @@ function App() {
   }, [vegetables]);
 
   const addVegetable = () => {
-    axios.post('http://localhost:3000/vegetables', newVegetable)
+    axios.post('http://localhost/vegetables', newVegetable)
       .then((response) => {
         setVegetables([...vegetables, response.data]);
         setNewVegetable({ name: '', color: '', quantity: 0 });
@@ -29,7 +29,7 @@ function App() {
   };
 
   const editVegetable = () => {
-    axios.put(`http://localhost:3000/vegetables/${editedVegetable.id}`, editedVegetable)
+    axios.put(`http://localhost/vegetables/${editedVegetable.id}`, editedVegetable)
       .then((response) => {
         const index = vegetables.findIndex((v) => v.id === response.data.id);
         const updatedVegetables = [...vegetables];
@@ -44,7 +44,7 @@ function App() {
 
   const deleteVegetable = async () => {
     try {
-      await axios.delete(`http://localhost:3000/vegetables/${deletedVegetableId}`);
+      await axios.delete(`http://localhost/vegetables/${deletedVegetableId}`);
       setDeletedVegetableId(null);
       setVegetables(vegetables.filter((v) => v.id !== deletedVegetableId));
     } catch (error) {

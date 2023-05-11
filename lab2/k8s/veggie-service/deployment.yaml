@@ -12,8 +12,19 @@ spec:
      labels:
        app: veggie-node-app
     spec:
+      initContainers:
+          - name: run-migrations
+            image: bysdudent/veggie-migration:lab2
+            imagePullPolicy: Always
+            # command: [npm ls] # CLI команда запуску міграцій, де $(POSTGRESQL_URL) і $(VERSION) змінні середовища
+            # env:
+            #   - name: POSTGRESQL_URL
+            #     value: "postgres://demo:demo@postgres:5432/demo?sslmode=disable"
+            #   - name: VERSION
+            #     value: "20211128095755"     
       containers:
-        - image: bysdudent/veggie-nodejs
+        - image: bysdudent/veggie-nodejs:lab2
           name: veggie-node-app
           ports:
             - containerPort: 3000
+        
