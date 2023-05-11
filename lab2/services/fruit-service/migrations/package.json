@@ -2,16 +2,15 @@
     "name": "migrations",
     "version": "1.0.0",
     "description": "",
-    "main": "1683574912292_user-table.js",
+    "main": "1683825373740_orders-migrate.js",
     "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "migrate": "node-pg-migrate"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "migrate": "node-pg-migrate"
     },
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "node-pg-migrate": "^6.2.2",
-      "pg": "^8.10.0"
+        "node-pg-migrate": "^6.2.2",
+        "pg": "^8.10.0"
     }
-  }
-  
+}

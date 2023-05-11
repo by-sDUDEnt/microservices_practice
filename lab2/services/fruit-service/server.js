@@ -20,7 +20,7 @@ app.use(cors());
 const pool = new Pool({
   user: "demo",
   host: "postgres-orders",
-  database: "demo",
+  database: "db-orders",
   password: "demo",
   port: 5432
 })
@@ -28,7 +28,7 @@ const pool = new Pool({
 
 pool.connect()
   .then(() => {
-    return pool.query();
+    return pool.query(`SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';`);
     })
     .then((res) => {
       console.log(res)

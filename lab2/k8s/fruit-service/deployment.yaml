@@ -19,11 +19,12 @@ spec:
             command: ["./node_modules/.bin/node-pg-migrate", "up"] # CLI команда запуску міграцій, де $(POSTGRESQL_URL) і $(VERSION) змінні середовища
             env:
               - name: DATABASE_URL
-                value: "postgres://demo:demo@postgres:5432/demo"
+                value: "postgres://demo:demo@postgres-orders:5432/db-orders"
               - name: VERSION
                 value: "20211128095755"  
       containers:
-        - image: ykzza/fruit-service-new       # образ Docker
+        - image: bysdudent/fruit-service:lab2       # образ Docker
+          imagePullPolicy: Always
           name: fruit-service           # ім'я контейнеру
           ports:
             - containerPort: 8080  # порт по якому можна звертатись до поди

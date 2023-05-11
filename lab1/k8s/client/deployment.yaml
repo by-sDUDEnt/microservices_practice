@@ -13,7 +13,7 @@ spec:
        app: client
     spec:
       containers:
-        - image: bysdudent/react-front
+        - image: bysdudent/react-front:lab1
           name: client
           ports:
             - containerPort: 80

@@ -13,7 +13,7 @@ spec:
        app: veggie-node-app
     spec:
       containers:
-        - image: bysdudent/veggie-nodejs
+        - image: bysdudent/veggie-nodejs:lab1
           name: veggie-node-app
           ports:
             - containerPort: 3000
