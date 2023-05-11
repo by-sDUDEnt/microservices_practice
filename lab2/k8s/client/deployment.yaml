@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - image: bysdudent/react-front
+          imagePullPolicy: Always
           name: client
           ports:
             - containerPort: 80
