@@ -7,6 +7,11 @@ function App() {
   const [editedVegetable, setEditedVegetable] = useState({ id: null, name: '', color: '', quantity: 0 });
   const [deletedVegetableId, setDeletedVegetableId] = useState(null);
 
+  const [orders, setOrders] = useState([]);
+  const [newOrder, setNewOrder] = useState({ veggie: '', count: 0, address: ''});
+  const [editedOrder, setEditedOrder] = useState({id: null, veggie: '', count: 0, address: ''});
+  const [deletedOrderId, setDeletedOrderId] = useState(null);
+
   useEffect(() => {
     axios.get('http://localhost/vegetables')
       .then((response) => {
@@ -17,6 +22,16 @@ function App() {
       });
   }, [vegetables]);
 
+  useEffect(() => {
+    axios.get('http://localhost/orders')
+      .then((response) => {
+        setOrders(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching orders:', error);
+      });
+  }, [orders]);
+
   const addVegetable = () => {
     axios.post('http://localhost/vegetables', newVegetable)
       .then((response) => {
@@ -25,6 +40,17 @@ function App() {
       })
       .catch((error) => {
         console.error('Error adding vegetable:', error);
+      });
+  };
+
+  const addOrder = () => {
+    axios.post('http://localhost/orders', newOrder)
+      .then((response) => {
+        setOrders([...orders, response.data]);
+        setNewOrder({ veggie: '', count: 0, address: '' });
+      })
+      .catch((error) => {
+        console.error('Error adding order:', error);
       });
   };
 
@@ -42,11 +68,36 @@ function App() {
       });
   };
 
+  const editOrder = () => {
+    axios.put(`http://localhost/orders/${editedOrder.id}`, editedOrder)
+      .then((response) => {
+        const index = orders.findIndex((v) => v.id === response.data.id);
+        const updatedOrders = [...orders];
+        updatedOrders[index] = response.data;
+        setOrders(updatedOrders);
+        setEditedOrder({ id: null, veggie: '', count: 0, address: ''});
+      })
+      .catch((error) => {
+        console.error('Error editing order:', error);
+      });
+  };
+
+
   const deleteVegetable = async () => {
     try {
       await axios.delete(`http://localhost/vegetables/${deletedVegetableId}`);
       setDeletedVegetableId(null);
       setVegetables(vegetables.filter((v) => v.id !== deletedVegetableId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteOrder = async () => {
+    try {
+      await axios.delete(`http://localhost/orders/${deletedOrderId}`);
+      setDeletedOrderId(null);
+      setOrders(orders.filter((v) => v.id !== deletedOrderId));
     } catch (error) {
       console.error(error);
     }
@@ -58,7 +109,7 @@ function App() {
 
       <h2>Add Vegetable</h2>
       <div>
-        <label>Name: </label>
+        <label>Veggie: </label>
         <input type="text" value={newVegetable.name} onChange={(e) => setNewVegetable({ ...newVegetable, name: e.target.value })} />
       </div>
       <div>
@@ -116,7 +167,79 @@ function App() {
       </li>
     ))}
   </ul>
-</div>);
+
+
+
+  <div>
+      <h1>Orders</h1>
+
+      <h2>Add order</h2>
+      <div>
+        <label>Veggie: </label>
+        <input type="text" value={newOrder.name} onChange={(e) => setNewOrder({ ...newOrder, name: e.target.value })} />
+      </div>
+      <div>
+        <label>Count: </label>
+        <input type="number" value={newOrder.count} onChange={(e) => setNewOrder({ ...newOrder, count: e.target.value })} />
+      </div>
+      <div>
+        <label>Addres: </label>
+        <input type="text" value={newOrder.address} onChange={(e) => setNewOrder({ ...newOrder, address: e.target.value })} />
+      </div>
+      <button onClick={addOrder}>Add Order</button>
+      <h2>Edit Order</h2>
+  <div>
+    <select value={editedOrder.id} onChange={(e) => setEditedOrder({ ...editedOrder, id: e.target.value })}>
+      <option value={null}>Select a order</option>
+      {orders.map((v) => (
+        <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
+        
+      ))}
+    </select>
+  </div>
+  {editedOrder.id && (
+    <>
+      <div>
+        <label>Veggie: </label>
+        <input type="text" value={editedOrder.veggie} onChange={(e) => setEditedOrder({ ...editedOrder, veggie: e.target.value })} />
+      </div>
+      <div>
+        <label>Count: </label>
+        <input type="number" value={editedOrder.count} onChange={(e) => setEditedOrder({ ...editedOrder, count: e.target.value })} />
+      </div>
+      <div>
+        <label>Addres: </label>
+        <input type="text" value={editedOrder.address} onChange={(e) => setEditedOrder({ ...editedOrder, address: e.target.value })} />
+      </div>
+      <button onClick={editOrder}>Save Changes</button>
+    </>
+  )}
+
+  <h2>Delete Order</h2>
+  <div>
+    <select value={deletedOrderId} onChange={(e) => setDeletedOrderId(e.target.value)}>
+      <option value={null}>Select a order</option>
+      {orders.map((v) => (
+        <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
+      ))}
+    </select>
+    <button onClick={deleteOrder}>Delete</button>
+  </div>
+
+  <h2>Orders</h2>
+  <ul>
+    {orders.map((v) => (
+      <li key={v.id}>
+        {v.veggie} ({v.count}, {v.address})
+      </li>
+    ))}
+  </ul>
+</div>
+  
+</div>
+
+
+);
 }
 
 export default App;
