@@ -26,5 +26,6 @@ spec:
         - image: bysdudent/veggie-nodejs:lab2
           name: veggie-node-app
           ports:
-            - containerPort: 3000
+            - containerPort: 3000 
+          # for lab3 and further port changed to 8080
         

@@ -12,6 +12,14 @@ let vegetables = [
   { id: 3, name: 'Eggplant', color: 'Purple', quantity: 3 }
 ];
 
+// const pool = new Pool({
+//   user: "your_username",
+//   host: "localhost",
+//   database: "your_database_name",
+//   password: "your_password",
+//   port: 5432
+// })
+
 const pool = new Pool({
   user: "demo",
   host: "postgres",
@@ -31,17 +39,17 @@ const pool = new Pool({
 pool.connect()
   .then(() => {
     return pool.query(
-      // `
-      // CREATE TABLE IF NOT EXISTS vegetables (
-      //   id SERIAL PRIMARY KEY,
-      //   name TEXT NOT NULL,
-      //   color TEXT NOT NULL,
-      //   quantity INTEGER NOT NULL
-      // )
+    //   `
+    //   CREATE TABLE IF NOT EXISTS vegetables (
+    //     id SERIAL PRIMARY KEY,
+    //     name TEXT NOT NULL,
+    //     color TEXT NOT NULL,
+    //     quantity INTEGER NOT NULL
+    //   )
     // `
-    // `
-    // SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
-    // `
+    `
+    SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
+    `
     // `
     // INSERT INTO vegetables(name, color, quantity) VALUES('potato', 'red', 4) RETURNING * 
     // `
