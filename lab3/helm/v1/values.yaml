@@ -1,0 +1,76 @@
+postgresql:
+  # fullnameOverride: postgres
+  auth:
+      postgresPassword: "demo"
+      username: "demo"
+      password: "demo"
+      database: "demo"
+  persistence:
+    size: 5Gi
+    mountPath: /var/lib/postgresql/data
+    name: postgresql_vegetables
+  
+configs:
+  POSTGRES_DB: demo
+  POSTGRES_HOST: postgres
+
+secrets:
+  POSTGRES_USER: "ZGVtbw=="
+  POSTGRES_PASSWORD: "ZGVtbw=="
+
+microservises:
+  client:
+    image:
+      namespace: bysdudent/
+      name: react-front
+      tag: latest
+    service:
+      ports:
+        - name: http
+          containerPort: 80
+          port: 80
+    ingress:
+      path: /
+      port: http
+
+  service1:
+    replicaCount: 1
+    migrations:
+      image:
+        namespace: bysdudent/
+        name: veggie-migration
+        tag: lab2
+      DATABASE_URL: "postgres://demo:demo@local-postgresql:5432/demo"
+    image:
+      namespace: bysdudent/
+      name: veggie-nodejs
+      tag: lab3
+    service:
+      ports:
+      - name: http
+        containerPort: 8080
+        port: 80
+    ingress:
+      path: /vegetables
+      port: http
+
+  service2:
+    replicaCount: 1
+    migrations:
+      image:
+        namespace: bysdudent/
+        name: orders-migration
+        tag: lab2
+      DATABASE_URL: "postgres://demo:demo@local-postgresql:5432/demo"
+    image:
+      namespace: bysdudent/
+      name: fruit-service
+      tag: lab2
+    service:
+      ports:
+      - name: http
+        containerPort: 8080
+        port: 80
+    ingress:
+      path: /orders
+      port: http

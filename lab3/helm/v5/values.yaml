@@ -1,0 +1,10 @@
+postgresql:
+  auth:
+      postgresPassword: "demo"
+      username: "demo"
+      password: "demo"
+      database: "demo"
+  persistence:
+    size: 5Gi
+    mountPath: /var/lib/postgresql/data
+    name: postgresql_vegetables

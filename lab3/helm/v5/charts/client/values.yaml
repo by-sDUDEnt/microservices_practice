@@ -1,0 +1,14 @@
+image:
+  dockerNamespace: bysdudent/
+  name: react-front
+  tag: latest
+
+service:
+  ports:
+    - name: http
+      port: 80
+      containerPort: 80
+
+ingress:
+  path: /
+  port: http
