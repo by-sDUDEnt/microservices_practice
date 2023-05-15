@@ -20,21 +20,21 @@ let vegetables = [
 //   port: 5432
 // })
 
-const pool = new Pool({
-  user: "demo",
-  host: "postgres",
-  database: "demo",
-  password: "demo",
-  port: 5432
-})
-
 // const pool = new Pool({
 //   user: "demo",
-//   host: "localhost",
+//   host: "postgres",
 //   database: "demo",
 //   password: "demo",
 //   port: 5432
 // })
+
+const pool = new Pool({
+  user: "demo",
+  host: "localhost",
+  database: "demo",
+  password: "demo",
+  port: 5432
+})
 
 pool.connect()
   .then(() => {

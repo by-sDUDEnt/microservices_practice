@@ -23,7 +23,7 @@ spec:
               - name: VERSION
                 value: "20211128095755"     
       containers:
-        - image: bysdudent/veggie-nodejs:lab2
+        - image: bysdudent/veggie-nodejs:lab2.1
           name: veggie-node-app
           ports:
             - containerPort: 3000 

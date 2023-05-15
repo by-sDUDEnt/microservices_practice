@@ -5,12 +5,6 @@ const app = express();
 
 
 
-// Hardcoded JSON database of vegetables
-let vegetables = [
-  { id: 1, name: 'Carrots', color: 'Orange', quantity: 10 },
-  { id: 2, name: 'Broccoli', color: 'Green', quantity: 5 },
-  { id: 3, name: 'Eggplant', color: 'Purple', quantity: 3 }
-];
 
 // const pool = new Pool({
 //   user: "your_username",
@@ -21,10 +15,10 @@ let vegetables = [
 // })
 
 const pool = new Pool({
-  user: "demo",
-  host: "local-postgresql",
-  database: "demo",
-  password: "demo",
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DB,
+  password: process.env.POSTGRES_PASSWORD,
   port: 5432
 })
 
@@ -47,18 +41,18 @@ pool.connect()
     //     quantity INTEGER NOT NULL
     //   )
     // `
-    `
-    SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
-    `
+    // `
+    // SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
+    // `
     // `
     // INSERT INTO vegetables(name, color, quantity) VALUES('potato', 'red', 4) RETURNING * 
     // `
     // `
     // CREATE ROLE exc1 LOGIN PASSWORD 'password' SUPERUSER;
     // GRANT ALL PRIVILEGES ON DATABASE demo TO exc1;
-// `
-// SELECT * FROM vegetables
-// `
+`
+SELECT * FROM orders
+`
 
     // `
     // `

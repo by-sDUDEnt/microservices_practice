@@ -8,8 +8,8 @@ function App() {
   const [deletedVegetableId, setDeletedVegetableId] = useState(null);
 
   const [orders, setOrders] = useState([]);
-  const [newOrder, setNewOrder] = useState({ veggie: '', count: 0, address: ''});
-  const [editedOrder, setEditedOrder] = useState({id: null, veggie: '', count: 0, address: ''});
+  const [newOrder, setNewOrder] = useState({ veggie: '', count: 0, address: '' });
+  const [editedOrder, setEditedOrder] = useState({ id: null, veggie: '', count: 0, address: '' });
   const [deletedOrderId, setDeletedOrderId] = useState(null);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function App() {
         const updatedOrders = [...orders];
         updatedOrders[index] = response.data;
         setOrders(updatedOrders);
-        setEditedOrder({ id: null, veggie: '', count: 0, address: ''});
+        setEditedOrder({ id: null, veggie: '', count: 0, address: '' });
       })
       .catch((error) => {
         console.error('Error editing order:', error);
@@ -105,141 +105,142 @@ function App() {
 
   return (
     <div>
-      <h1>Vegetables</h1>
+      <div>
+        <h1>Vegetables</h1>
 
-      <h2>Add Vegetable</h2>
-      <div>
-        <label>Veggie: </label>
-        <input type="text" value={newVegetable.name} onChange={(e) => setNewVegetable({ ...newVegetable, name: e.target.value })} />
-      </div>
-      <div>
-        <label>Color: </label>
-        <input type="text" value={newVegetable.color} onChange={(e) => setNewVegetable({ ...newVegetable, color: e.target.value })} />
-      </div>
-      <div>
-        <label>Quantity: </label>
-        <input type="number" value={newVegetable.quantity} onChange={(e) => setNewVegetable({ ...newVegetable, quantity: e.target.value })} />
-      </div>
-      <button onClick={addVegetable}>Add Vegetable</button>
-      <h2>Edit Vegetable</h2>
-  <div>
-    <select value={editedVegetable.id} onChange={(e) => setEditedVegetable({ ...editedVegetable, id: e.target.value })}>
-      <option value={null}>Select a vegetable</option>
-      {vegetables.map((v) => (
-        <option key={v.id} value={v.id}>{v.name}</option>
-      ))}
-    </select>
-  </div>
-  {editedVegetable.id && (
-    <>
-      <div>
-        <label>Name: </label>
-        <input type="text" value={editedVegetable.name} onChange={(e) => setEditedVegetable({ ...editedVegetable, name: e.target.value })} />
-      </div>
-      <div>
-        <label>Color: </label>
-        <input type="text" value={editedVegetable.color} onChange={(e) => setEditedVegetable({ ...editedVegetable, color: e.target.value })} />
-      </div>
-      <div>
-        <label>Quantity: </label>
-        <input type="number" value={editedVegetable.quantity} onChange={(e) => setEditedVegetable({ ...editedVegetable, quantity: e.target.value })} />
-      </div>
-      <button onClick={editVegetable}>Save Changes</button>
-    </>
-  )}
+        <h2>Add Vegetable</h2>
+        <div>
+          <label>Veggie: </label>
+          <input type="text" value={newVegetable.name} onChange={(e) => setNewVegetable({ ...newVegetable, name: e.target.value })} />
+        </div>
+        <div>
+          <label>Color: </label>
+          <input type="text" value={newVegetable.color} onChange={(e) => setNewVegetable({ ...newVegetable, color: e.target.value })} />
+        </div>
+        <div>
+          <label>Quantity: </label>
+          <input type="number" value={newVegetable.quantity} onChange={(e) => setNewVegetable({ ...newVegetable, quantity: e.target.value })} />
+        </div>
+        <button onClick={addVegetable}>Add Vegetable</button>
+        <h2>Edit Vegetable</h2>
+        <div>
+          <select value={editedVegetable.id} onChange={(e) => setEditedVegetable({ ...editedVegetable, id: e.target.value })}>
+            <option value={null}>Select a vegetable</option>
+            {vegetables.map((v) => (
+              <option key={v.id} value={v.id}>{v.name}</option>
+            ))}
+          </select>
+        </div>
+        {editedVegetable.id && (
+          <>
+            <div>
+              <label>Name: </label>
+              <input type="text" value={editedVegetable.name} onChange={(e) => setEditedVegetable({ ...editedVegetable, name: e.target.value })} />
+            </div>
+            <div>
+              <label>Color: </label>
+              <input type="text" value={editedVegetable.color} onChange={(e) => setEditedVegetable({ ...editedVegetable, color: e.target.value })} />
+            </div>
+            <div>
+              <label>Quantity: </label>
+              <input type="number" value={editedVegetable.quantity} onChange={(e) => setEditedVegetable({ ...editedVegetable, quantity: e.target.value })} />
+            </div>
+            <button onClick={editVegetable}>Save Changes</button>
+          </>
+        )}
 
-  <h2>Delete Vegetable</h2>
-  <div>
-    <select value={deletedVegetableId} onChange={(e) => setDeletedVegetableId(e.target.value)}>
-      <option value={null}>Select a vegetable</option>
-      {vegetables.map((v) => (
-        <option key={v.id} value={v.id}>{v.name}</option>
-      ))}
-    </select>
-    <button onClick={deleteVegetable}>Delete</button>
-  </div>
+        <h2>Delete Vegetable</h2>
+        <div>
+          <select value={deletedVegetableId} onChange={(e) => setDeletedVegetableId(e.target.value)}>
+            <option value={null}>Select a vegetable</option>
+            {vegetables.map((v) => (
+              <option key={v.id} value={v.id}>{v.name}</option>
+            ))}
+          </select>
+          <button onClick={deleteVegetable}>Delete</button>
+        </div>
 
-  <h2>Vegetables</h2>
-  <ul>
-    {vegetables.map((v) => (
-      <li key={v.id}>
-        {v.name} ({v.color}, {v.quantity})
-      </li>
-    ))}
-  </ul>
-
-
-
-  <div>
-      <h1>Orders</h1>
-
-      <h2>Add order</h2>
-      <div>
-        <label>Veggie: </label>
-        <input type="text" value={newOrder.name} onChange={(e) => setNewOrder({ ...newOrder, name: e.target.value })} />
+        <h2>Vegetables</h2>
+        <ul>
+          {vegetables.map((v) => (
+            <li key={v.id}>
+              {v.name} ({v.color}, {v.quantity})
+            </li>
+          ))}
+        </ul>
       </div>
-      <div>
-        <label>Count: </label>
-        <input type="number" value={newOrder.count} onChange={(e) => setNewOrder({ ...newOrder, count: e.target.value })} />
-      </div>
-      <div>
-        <label>Addres: </label>
-        <input type="text" value={newOrder.address} onChange={(e) => setNewOrder({ ...newOrder, address: e.target.value })} />
-      </div>
-      <button onClick={addOrder}>Add Order</button>
-      <h2>Edit Order</h2>
-  <div>
-    <select value={editedOrder.id} onChange={(e) => setEditedOrder({ ...editedOrder, id: e.target.value })}>
-      <option value={null}>Select a order</option>
-      {orders.map((v) => (
-        <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
-        
-      ))}
-    </select>
-  </div>
-  {editedOrder.id && (
-    <>
-      <div>
-        <label>Veggie: </label>
-        <input type="text" value={editedOrder.veggie} onChange={(e) => setEditedOrder({ ...editedOrder, veggie: e.target.value })} />
-      </div>
-      <div>
-        <label>Count: </label>
-        <input type="number" value={editedOrder.count} onChange={(e) => setEditedOrder({ ...editedOrder, count: e.target.value })} />
-      </div>
-      <div>
-        <label>Addres: </label>
-        <input type="text" value={editedOrder.address} onChange={(e) => setEditedOrder({ ...editedOrder, address: e.target.value })} />
-      </div>
-      <button onClick={editOrder}>Save Changes</button>
-    </>
-  )}
-
-  <h2>Delete Order</h2>
-  <div>
-    <select value={deletedOrderId} onChange={(e) => setDeletedOrderId(e.target.value)}>
-      <option value={null}>Select a order</option>
-      {orders.map((v) => (
-        <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
-      ))}
-    </select>
-    <button onClick={deleteOrder}>Delete</button>
-  </div>
-
-  <h2>Orders</h2>
-  <ul>
-    {orders.map((v) => (
-      <li key={v.id}>
-        {v.veggie} ({v.count}, {v.address})
-      </li>
-    ))}
-  </ul>
-</div>
-  
-</div>
 
 
-);
+      <div>
+        <h1>Orders</h1>
+
+        <h2>Add order</h2>
+        <div>
+          <label>Veggie: </label>
+          <input type="text" value={newOrder.veggie} onChange={(e) => setNewOrder({ ...newOrder, veggie: e.target.value })} />
+        </div>
+        <div>
+          <label>Count: </label>
+          <input type="number" value={newOrder.count} onChange={(e) => setNewOrder({ ...newOrder, count: e.target.value })} />
+        </div>
+        <div>
+          <label>Addres: </label>
+          <input type="text" value={newOrder.address} onChange={(e) => setNewOrder({ ...newOrder, address: e.target.value })} />
+        </div>
+        <button onClick={addOrder}>Add Order</button>
+        <h2>Edit Order</h2>
+        <div>
+          <select value={editedOrder.id} onChange={(e) => setEditedOrder({ ...editedOrder, id: e.target.value })}>
+            <option value={null}>Select a order</option>
+            {orders.map((v) => (
+              <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
+
+            ))}
+          </select>
+        </div>
+        {editedOrder.id && (
+          <>
+            <div>
+              <label>Veggie: </label>
+              <input type="text" value={editedOrder.veggie} onChange={(e) => setEditedOrder({ ...editedOrder, veggie: e.target.value })} />
+            </div>
+            <div>
+              <label>Count: </label>
+              <input type="number" value={editedOrder.count} onChange={(e) => setEditedOrder({ ...editedOrder, count: e.target.value })} />
+            </div>
+            <div>
+              <label>Addres: </label>
+              <input type="text" value={editedOrder.address} onChange={(e) => setEditedOrder({ ...editedOrder, address: e.target.value })} />
+            </div>
+            <button onClick={editOrder}>Save Changes</button>
+          </>
+        )}
+
+        <h2>Delete Order</h2>
+        <div>
+          <select value={deletedOrderId} onChange={(e) => setDeletedOrderId(e.target.value)}>
+            <option value={null}>Select a order</option>
+            {orders.map((v) => (
+              <option key={v.id} value={v.id}>{v.address} {v.count} {v.veggie}</option>
+            ))}
+          </select>
+          <button onClick={deleteOrder}>Delete</button>
+        </div>
+
+        <h2>Orders</h2>
+        <ul>
+          {orders.map((v) => (
+            <li key={v.id}>
+              {v.veggie} ({v.count}, {v.address})
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+
+
+  );
 }
 
 export default App;

@@ -13,7 +13,9 @@ migrations:
 
 configs:
   POSTGRES_DB: demo
-  POSTGRES_HOST: postgres
+  POSTGRES_HOST: local-postgresql
+  
+
 
 secrets:
   POSTGRES_USER: "ZGVtbw=="
