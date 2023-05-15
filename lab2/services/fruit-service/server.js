@@ -18,13 +18,12 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const pool = new Pool({
-  user: "demo",
-  host: "postgres-orders",
-  database: "db-orders",
-  password: "demo",
+  user: process.env.POSTGRES_USER,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DB,
+  password: process.env.POSTGRES_PASSWORD,
   port: 5432
 })
-
 
 pool.connect()
   .then(() => {
