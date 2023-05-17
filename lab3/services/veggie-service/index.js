@@ -3,6 +3,8 @@ const { Pool } = require('pg');
 var cors = require('cors')
 const app = express();
 
+// require('dotenv').config()
+// console.log(process.env) 
 
 
 
@@ -41,18 +43,18 @@ pool.connect()
     //     quantity INTEGER NOT NULL
     //   )
     // `
-    // `
-    // SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
-    // `
+    `
+    SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
+    `
     // `
     // INSERT INTO vegetables(name, color, quantity) VALUES('potato', 'red', 4) RETURNING * 
     // `
     // `
     // CREATE ROLE exc1 LOGIN PASSWORD 'password' SUPERUSER;
     // GRANT ALL PRIVILEGES ON DATABASE demo TO exc1;
-`
-SELECT * FROM orders
-`
+// `
+// SELECT * FROM pg_users
+// `
 
     // `
     // `

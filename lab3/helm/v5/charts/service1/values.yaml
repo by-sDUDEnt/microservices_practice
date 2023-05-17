@@ -9,13 +9,12 @@ migrations:
     name: veggie-migration
     tag: lab2
   config:
-    DATABASE_URL: "postgres://demo:demo@local-postgresql:5432/demo"
+    DATABASE_URL: "postgres://demo:demo@postgres:5432/demo"
 
 configs:
   POSTGRES_DB: demo
-  POSTGRES_HOST: local-postgresql
+  POSTGRES_HOST: postgres
   
-
 
 secrets:
   POSTGRES_USER: "ZGVtbw=="

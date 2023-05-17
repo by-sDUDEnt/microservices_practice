@@ -2,10 +2,10 @@ postgresql:
   global:
     postgresql:
       auth:
-          postgresPassword: "demo"
-          username: "demo"
-          password: "demo"
-          database: "demo"
+          postgresPassword: "test"
+          username: "testsss3"
+          password: "test"
+          database: "test"
   fullnameOverride: "postgres"      
   primary:
     persistence:
