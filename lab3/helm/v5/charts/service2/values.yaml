@@ -1,7 +1,23 @@
 image:
   dockerNamespace: bysdudent/
-  name: fruit-service
+  name: orders-service
   tag: lab3
+
+migrations:
+  image:
+    dockerNamespace: bysdudent/
+    name: orders-migration
+    tag: lab2
+  config:
+    DATABASE_URL: "postgres://demo:demo@postgres:5432/demo"
+
+configs:
+  POSTGRES_DB: demo
+  POSTGRES_HOST: postgres
+
+secrets:
+  POSTGRES_USER: "ZGVtbw=="
+  POSTGRES_PASSWORD: "ZGVtbw=="
 
 service:
   ports:
