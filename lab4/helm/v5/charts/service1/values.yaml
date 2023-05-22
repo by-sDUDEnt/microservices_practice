@@ -1,0 +1,32 @@
+nameOverride: veggie-service
+
+image:
+  dockerNamespace: bysdudent/
+  name: veggie-nodejs
+  tag: lab4
+
+migrations:
+  image:
+    dockerNamespace: bysdudent/
+    name: veggie-migration
+    tag: lab2
+  config:
+    DATABASE_URL: "postgres://demo:demo@postgres:5432/demo"
+
+configs:
+  POSTGRES_DB: demo
+  POSTGRES_HOST: postgres
+
+secrets:
+  POSTGRES_USER: "ZGVtbw=="
+  POSTGRES_PASSWORD: "ZGVtbw=="
+
+service:
+  ports:
+    - name: http
+      port: 80
+      containerPort: 8080
+
+ingress:
+  path: /vegetables
+  port: http
