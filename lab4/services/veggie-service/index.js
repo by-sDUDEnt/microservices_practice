@@ -4,6 +4,7 @@ var cors = require('cors')
 const app = express();
 const axios = require('axios');
 require('dotenv').config()
+const Prometheus = require('prom-client')
 
 
 
@@ -87,6 +88,32 @@ pool.connect()
 app.use(express.json());
 
 app.use(cors());
+
+const httpRequestDurationMicroseconds = new Prometheus.Histogram({
+  name: 'http_request_duration_ms',
+  help: 'Duration of HTTP requests in ms',
+  labelNames: ['route'],
+  // buckets for response time from 0.1ms to 500ms
+  buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500]
+})
+
+
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const responseTimeInMs = Date.now() - start;
+    httpRequestDurationMicroseconds
+      .labels(req.route.path)
+      .observe(responseTimeInMs / 1000); // Convert to seconds
+  });
+  next();
+});
+
+app.get('/metrics', (req, res) => {
+  res.set('Content-Type', Prometheus.register.contentType)
+  res.end(Prometheus.register.metrics())
+})
+
 
 app.get('/vegetables', (req, res) => {
   const query = {

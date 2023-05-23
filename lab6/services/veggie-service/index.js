@@ -4,9 +4,15 @@ var cors = require('cors')
 const app = express();
 const axios = require('axios');
 require('dotenv').config()
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
 
-
-
+const Registry = client.Registry;
+const register = new Registry();
+register.setDefaultLabels({
+  app: 'example-nodejs-app'
+})
+client.collectDefaultMetrics({ register })
 
 // const pool = new Pool({
 //   user: "your_username",
@@ -88,10 +94,18 @@ app.use(express.json());
 
 app.use(cors());
 
+
+
+
+
+
+
 app.get('/vegetables', (req, res) => {
   const query = {
     text: 'SELECT * FROM vegetables',
   };
+  // res.json(query)
+  console.log(query)
   pool.query(query)
     .then((result) => res.json(result.rows))
     .catch((err) => {
@@ -99,6 +113,12 @@ app.get('/vegetables', (req, res) => {
       res.status(500).json({ error: 'Failed to retrieve vegetables' });
     });
 });
+
+app.get('/vegetables/metrics', async (req, res) => {
+  res.set('Content-Type', register.contentType);
+  let metrics = await register.metrics();
+  res.send(metrics);
+})
 
 app.get('/vegetables/:id', (req, res) => {
   const query = {
@@ -115,7 +135,7 @@ app.get('/vegetables/:id', (req, res) => {
     })
     .catch((err) => {
       console.error('Error retrieving vegetable:', err);
-      res.status(500).json({ error: 'Failed to retrieve vegetable' });
+      res.status(500).json({ error: 'Failed to retrieve vegetable1' });
     });
 });
 
@@ -171,6 +191,9 @@ app.delete('/vegetables/:id', (req, res) => {
     res.status(500).json({ error: 'Failed to delete vegetable' });
   });
 });
+
+
+
 
 app.listen(8080, () => {
   console.log('Server listening on port 8080');

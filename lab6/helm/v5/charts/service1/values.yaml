@@ -3,7 +3,9 @@ nameOverride: veggie-service
 image:
   dockerNamespace: bysdudent/
   name: veggie-nodejs
-  tag: lab4
+  tag: lab6
+
+scrapePath: /vegetables/metrics
 
 migrations:
   image:

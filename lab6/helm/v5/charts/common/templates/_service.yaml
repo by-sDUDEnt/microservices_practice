@@ -12,6 +12,10 @@ metadata:
   name: {{ include "common.fullname" . }}
   labels:
     {{- include "common.selectorLabels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/path: {{ .Values.scrapePath}}
+    prometheus.io/port: '8080'
 spec:
   type: ClusterIP
   ports:
