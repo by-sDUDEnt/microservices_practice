@@ -10,7 +10,7 @@ spec:
   template:
     metadata:
       labels:
-        app: postgres1
+        app: postgres
     spec:
       containers:
         - name: postgres
