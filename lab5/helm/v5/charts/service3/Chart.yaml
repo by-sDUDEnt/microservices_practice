@@ -1,0 +1,10 @@
+apiVersion: v2
+type: application
+version: 0.3.0
+name: history-service
+appVersion: "0.3"
+description: "demo"
+dependencies:
+  - name: common
+    version: 0.1.0
+    repository: file://../common

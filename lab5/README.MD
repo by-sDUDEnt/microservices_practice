@@ -1,4 +1,14 @@
-1. Було додано істіо
-2. Змінено виклик orders/create, який тепер посилається всередині кластеру на vegetabls аби перевірити 
-чи є достатня кількість, та змінює кількість на вказану в оредері, чи видаляє якщо ==
-3. Додано circut breaker та retry-timeout для обох сервісів
+GOALS : 
+install rabbti mq
+test first read/write
+create history service
+integrate rabbitmq
+
+
+
+commands history:
+
+kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+
+kubectl port-forward "service/hello-world" 5672
+kubectl port-forward "service/hello-world" 15672

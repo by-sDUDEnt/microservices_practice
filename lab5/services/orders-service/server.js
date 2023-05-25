@@ -3,16 +3,33 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const axios = require('axios');
 var cors = require('cors')
-// require('dotenv').config()
+require('dotenv').config()
 
 const PORT = 8080/// CHANGED
 const HOST = '0.0.0.0'
+const amqp = require('amqplib');
+let channel;
 
-let orders = [
-  {id: 1, veggie: 'Carrots', count: 2, address: 'Kyiv'},
-  {id: 2, veggie: 'Broccoli', count: 4, address: 'Lviv'},
-  {id: 3, veggie: 'Eggplant', count: 1, address: 'Dnipro' }
-];
+async function connect() {
+  const amqpServer = "amqp://default_user_Jua4hvFeplF7YWhIAqt:L799I-qGbN8nAWjQFxvxkBl1x6asvZ1h@hello-world:5672"
+  const connection = await amqp.connect(amqpServer);
+  channel = await connection.createChannel();
+}
+connect()
+
+async function addToQueue(msg, data){
+  await channel.assertQueue('ORDERS_HISTORY');
+  channel.sendToQueue(
+    'ORDERS_HISTORY',
+    Buffer.from(
+      JSON.stringify({
+        msg: msg,
+        data: data
+      })
+    )
+  );
+}
+
 
 const app = express()
 app.use(bodyParser.json());
@@ -107,8 +124,6 @@ app.post('/orders', async (req, res) => {
 
     const availableVeggie = veggieResponse.data;
     let availableCount = availableVeggie.quantity;
-    console.log("mmm")
-    console.log(availableVeggie )
 
     if (availableCount < count) {
       return res.status(400).json({ error: 'Not enough vegetables available' });
@@ -132,6 +147,7 @@ app.post('/orders', async (req, res) => {
 
     const createResult = await pool.query(createQuery);
     res.status(201).json(createResult.rows[0]);
+    addToQueue("Add",result.rows[0] )
   } catch (err) {
     console.error('Error adding order:', err);
     res.status(500).json({ error: 'Failed to add order' });
@@ -152,6 +168,7 @@ app.put('/orders/:id', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Order not found' });
     }
+    addToQueue("Changed",result.rows[0] )
 
     return res.json(result.rows[0]);
   } catch (err) {
@@ -173,6 +190,7 @@ app.delete('/orders/:id', async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Order not found' });
     }
+    addToQueue("Delete",result.rows[0] )
 
     return res.json(result.rows[0]);
   } catch (err) {

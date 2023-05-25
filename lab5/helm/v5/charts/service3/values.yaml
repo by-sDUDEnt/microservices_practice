@@ -1,15 +1,15 @@
-nameOverride: orders-service
+nameOverride: history-service
 
 image:
   dockerNamespace: bysdudent/
-  name: orders-service
+  name: history-service
   tag: lab5
 
 migrations:
   image:
     dockerNamespace: bysdudent/
-    name: orders-migration
-    tag: lab2
+    name: history-migration
+    tag: lab5
   config:
     DATABASE_URL: "postgres://demo:demo@postgres:5432/demo"
 
@@ -28,5 +28,5 @@ service:
       containerPort: 8080
 
 ingress:
-  path: /orders
+  path: /history
   port: http

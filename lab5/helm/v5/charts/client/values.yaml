@@ -1,7 +1,7 @@
 image:
   dockerNamespace: bysdudent/
   name: react-front
-  tag: lab4
+  tag: lab5
 
 service:
   ports:

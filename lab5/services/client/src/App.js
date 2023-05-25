@@ -13,6 +13,8 @@ function App() {
   const [editedOrder, setEditedOrder] = useState({ id: null, veggie: '', count: 0, address: '' });
   const [deletedOrderId, setDeletedOrderId] = useState(null);
 
+  const [history, setHistory] = useState([]);
+
 
 
 
@@ -33,6 +35,26 @@ function App() {
       })
       .catch((error) => {
         console.error('Error fetching orders:', error);
+      });
+  }, [count]);
+
+  useEffect(() => {
+    axios.get('http://localhost/history')
+      .then((response) => {
+        
+        const obj = [];
+        response.data.forEach((item, index) => {
+          obj[index] = JSON.parse(item.json);
+          obj[index].id = item.id;
+          obj[index].date = item.date;
+        });
+        setHistory(obj);
+        console.log(obj)
+
+
+      })
+      .catch((error) => {
+        console.error('Error fetching history:', error);
       });
   }, [count]);
 
@@ -270,6 +292,19 @@ function App() {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div> 
+      <h2>history</h2>
+        <table >
+        <tr> <th>Operation</th> <th>Item</th> <th>Date</th> </tr>
+          {history.map((v) => (
+            <tr key={v.id}>
+              <th>{v.msg}</th> <th>  {JSON.stringify(v.data)}</th><th> {v.date}</th>
+            </tr>
+          ))}
+        </table>
+
       </div>
 
     </div>

@@ -26,6 +26,7 @@ spec:
         - name: {{ .Values.migrations.image.name }}
           image: {{ .Values.image.dockerNamespace }}{{ .Values.migrations.image.name }}:{{ .Values.migrations.image.tag }}
           command: [ "./node_modules/.bin/node-pg-migrate", "up", "--no-check-order"]
+          imagePullPolicy: Always
           env:
             - name: DATABASE_URL
               value: {{ .Values.migrations.config.DATABASE_URL | quote }}
