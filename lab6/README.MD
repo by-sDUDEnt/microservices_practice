@@ -1,12 +1,12 @@
 1. Система логування побудована на EFK. Розротання через `kubectl apply -f k8s/logging`
 Можливо треба зробити двічі, вирішив не розділяти по папках
 
-`
-helm dep build helm/v5/charts/client __
+```
+helm dep build helm/v5/charts/client 
 helm dep build helm/v5/charts/service1 __
 helm dep build helm/v5/charts/service2 __
 helm dep build helm/v5 __
-`
+```
 
 1.1 Ловить весь stdout зі всього кластеру. Або ж запустити `helm install local v5`, або `test-pod `в папці `k8s/logging` - останній це просто busybox 
 Все відображається чудово у Kibana
@@ -17,15 +17,15 @@ helm dep build helm/v5 __
 3. У Кібані у фільтрі виставити docker.container_id is <id>
 4. При операції на додавання, видалення буде логуватися query bd, помилки і т.п.
 
-`
+```
 kubectl port-forward svc/kibana-np 8080 
-`
+```
 
 2. Встановлюється стандартна конфігруація Prometeus + Grafana відповідними командами з helm
 В середині Grafana будуть доступні метрики в навбарі у вкладці Explore
 Юзер і пароль закодовані в base64, потрібно декодувати
 
-`
+```
 kubectl create namespace monitoring __
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install --namespace monitoring prometheus prometheus-community/kube-prometheus-stack
@@ -34,8 +34,7 @@ kubectl port-forward --namespace monitoring service/prometheus-grafana 3000:80
 
 kubectl get secret --namespace monitoring prometheus-grafana -o jsonpath="{.data.admin-password}" 
 kubectl get secret --namespace monitoring prometheus-grafana -o jsonpath="{.data.admin-user}"  
-
-`
+```
 
 localhost:9090 - prometheus
 localhost: 300 - grafana
