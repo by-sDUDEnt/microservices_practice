@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: istio-test
+spec:
+  containers:
+  - name: istio-test
+    image: bysdudent/istio-check:lab4   
+    imagePullPolicy: Always
+    env:
+    - name: URL
+      value: "http://veggie-service:80/vegetables/"
+    - name: NUM_REQUESTS
+      value: "10"

@@ -1,9 +1,9 @@
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
-  name: service2-destination
+  name: service1-destination
 spec:
-  host: orders-service
+  host: veggie-service
   trafficPolicy:
     outlierDetection:
       consecutive5xxErrors: 5 

@@ -4,18 +4,11 @@ var cors = require('cors')
 const app = express();
 const axios = require('axios');
 require('dotenv').config()
-const Prometheus = require('prom-client')
+var timeout = require('connect-timeout');
+let breaked = 0
+let slowed  = 0
 
 
-
-
-// const pool = new Pool({
-//   user: "your_username",
-//   host: "localhost",
-//   database: "your_database_name",
-//   password: "your_password",
-//   port: 5432
-// })
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -25,44 +18,14 @@ const pool = new Pool({
   port: 5432
 })
 
-// const pool = new Pool({
-//   user: "demo",
-//   host: "localhost",
-//   database: "demo",
-//   password: "demo",
-//   port: 5432
-// })
+
 
 pool.connect()
   .then(() => {
     return pool.query(
-    //   `
-    //   CREATE TABLE IF NOT EXISTS vegetables (
-    //     id SERIAL PRIMARY KEY,
-    //     name TEXT NOT NULL,
-    //     color TEXT NOT NULL,
-    //     quantity INTEGER NOT NULL
-    //   )
-    // `
     `
     SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
     `
-    // `
-    // INSERT INTO vegetables(name, color, quantity) VALUES('potato', 'red', 4) RETURNING * 
-    // `
-    // `
-    // CREATE ROLE exc1 LOGIN PASSWORD 'password' SUPERUSER;
-    // GRANT ALL PRIVILEGES ON DATABASE demo TO exc1;
-// `
-// SELECT * FROM orders
-// `
-
-    // `
-    // `
-    // DROP TABLE IF EXISTS vegatables; 
-    // DROP TABLE IF EXISTS vegetables;
-    // DROP TABLE IF EXISTS roles;
-    // `
     );
   })
   .then((res) => {
@@ -72,59 +35,58 @@ pool.connect()
   .catch((err) => {
     console.error('Error connecting to database:', err);
   });
-// const connectDb = async () => {
-//   try {
-//     await client.connect()
-//     const res = await client.query("DROP TABLE IF EXISTS vegatables; CREATE TABLE vegatables\(veggie_id serial PRIMARY KEY, name VARCHAR (255) NOT NULL,color VARCHAR (255) NOT NULL, quantity VARCHAR (255) NOT NULL);")
-//     console.log(res)
-//     await client.end()
-//   }  catch (error) {
-//     console.log(error)
-//   }
-//   }
-
-// Initialize express app and middleware
-// const app = express();
 app.use(express.json());
 
 app.use(cors());
 
-const httpRequestDurationMicroseconds = new Prometheus.Histogram({
-  name: 'http_request_duration_ms',
-  help: 'Duration of HTTP requests in ms',
-  labelNames: ['route'],
-  // buckets for response time from 0.1ms to 500ms
-  buckets: [0.10, 5, 15, 50, 100, 200, 300, 400, 500]
+app.get('/vegetables/slowpod', (req, res) => {
+  breaked = 0
+  slowed = 1
+  res.send("slowed")
 })
 
+app.get('/vegetables/breakpod', (req, res) => {
+  slowed = 0
+  breaked = 1
+  res.send("breakpod")
+})
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  res.on('finish', () => {
-    const responseTimeInMs = Date.now() - start;
-    httpRequestDurationMicroseconds
-      .labels(req.route.path)
-      .observe(responseTimeInMs / 1000); // Convert to seconds
-  });
-  next();
-});
-
-app.get('/metrics', (req, res) => {
-  res.set('Content-Type', Prometheus.register.contentType)
-  res.end(Prometheus.register.metrics())
+app.get('/vegetables/revive', (req, res) => {
+  slowed = 0
+  breaked = 0
+  res.json({"slowed:": slowed, "breaked": breaked})
 })
 
 
 app.get('/vegetables', (req, res) => {
-  const query = {
-    text: 'SELECT * FROM vegetables',
-  };
-  pool.query(query)
-    .then((result) => res.json(result.rows))
-    .catch((err) => {
-      console.error('Error retrieving vegetables:', err);
-      res.status(500).json({ error: 'Failed to retrieve vegetables' });
-    });
+  if (breaked==1){
+    setTimeout(function() {
+      res.sendStatus(500)
+
+    }, 4000)
+  }else  if (slowed == 1){
+    setTimeout(function() {
+      const query = {
+        text: 'SELECT * FROM vegetables',
+      };
+      pool.query(query)
+        .then((result) => res.json(result.rows))
+        .catch((err) => {
+          console.error('Error retrieving vegetables:', err);
+          res.status(500).json({ error: 'Failed to retrieve vegetables' });
+        });
+  }, 2500)
+  } else {
+    const query = {
+      text: 'SELECT * FROM vegetables',
+    };
+    pool.query(query)
+      .then((result) => res.json(result.rows))
+      .catch((err) => {
+        console.error('Error retrieving vegetables:', err);
+        res.status(500).json({ error: 'Failed to retrieve vegetables' });
+      });
+  }
 });
 
 app.get('/vegetables/:id', (req, res) => {
@@ -199,6 +161,8 @@ app.delete('/vegetables/:id', (req, res) => {
   });
 });
 
-app.listen(8080, () => {
+let server = app.listen(8080, () => {
   console.log('Server listening on port 8080');
   });
+
+  server.setTimeout(10000);

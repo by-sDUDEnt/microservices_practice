@@ -9,8 +9,8 @@ spec:
     - route:
         - destination:
             host: veggie-service # ім'я Service до якого застосовується налаштування
-      timeout: 5s
+      timeout: 1s
       retries:
-        attempts: 3
+        attempts: 1
         retryOn: 5xx
-        perTryTimeout: 5s
+        perTryTimeout: 2s

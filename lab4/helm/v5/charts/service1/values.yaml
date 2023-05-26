@@ -4,7 +4,7 @@ image:
   dockerNamespace: bysdudent/
   name: veggie-nodejs
   tag: lab4
-
+replicaCount : 2
 migrations:
   image:
     dockerNamespace: bysdudent/
