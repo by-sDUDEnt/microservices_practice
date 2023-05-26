@@ -6,30 +6,30 @@
 
 ###Commands: 
 for helm deps
-`
+```
 helm dep build helm/v5/charts/client
 helm dep build helm/v5/charts/service1
 helm dep build helm/v5/charts/service2
 helm dep build helm/v5
 
-`
+```
 for istio-setup
-`
+```
 kubectl create namespace istio-system
 helm install istio-base istio/base -n istio-system
 helm install istiod istio/istiod -n istio-system --wait
 kubectl label namespace default istio-injection=enabled
-`
+```
 
-`
+```
 helm install test01 helm/v5
-`
+```
 
 kubectl apply -f k8s/istio/braker
 kubectl apply -f k8s/istio/retry 
 kubectl apply -f k8s/test-pod.yaml
 kubectl port-forward pod/istio-test 8081
-`
+```
 Для перевірки доцільно спочатку тільки ретай, потім брейкер.
 http://localhost:8081/istio/slow-test  -- тест сервісу veggie
 

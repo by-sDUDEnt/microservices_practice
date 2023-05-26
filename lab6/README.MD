@@ -3,9 +3,9 @@
 
 ```
 helm dep build helm/v5/charts/client 
-helm dep build helm/v5/charts/service1 __
-helm dep build helm/v5/charts/service2 __
-helm dep build helm/v5 __
+helm dep build helm/v5/charts/service1 
+helm dep build helm/v5/charts/service2 
+helm dep build helm/v5 
 ```
 
 1.1 Ловить весь stdout зі всього кластеру. Або ж запустити `helm install local v5`, або `test-pod `в папці `k8s/logging` - останній це просто busybox 
@@ -26,7 +26,7 @@ kubectl port-forward svc/kibana-np 8080
 Юзер і пароль закодовані в base64, потрібно декодувати
 
 ```
-kubectl create namespace monitoring __
+kubectl create namespace monitoring 
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm install --namespace monitoring prometheus prometheus-community/kube-prometheus-stack
 kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus  9090
