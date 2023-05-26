@@ -4,7 +4,7 @@
 3. Додано circut breaker та retry-timeout для обох сервісів
 
 
-###Commands: 
+### Commands: 
 for helm deps
 ```
 helm dep build helm/v5/charts/client
@@ -24,7 +24,7 @@ kubectl label namespace default istio-injection=enabled
 ```
 helm install test01 helm/v5
 ```
-
+```
 kubectl apply -f k8s/istio/braker
 kubectl apply -f k8s/istio/retry 
 kubectl apply -f k8s/test-pod.yaml
