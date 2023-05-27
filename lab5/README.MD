@@ -16,6 +16,7 @@ for helm
 helm dep build helm/v5/charts/client
 helm dep build helm/v5/charts/service1
 helm dep build helm/v5/charts/service2
+helm dep build helm/v5/charts/service3
 helm dep build helm/v5
 
 helm install lab5test01 helm/v5
