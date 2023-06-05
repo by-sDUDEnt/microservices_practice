@@ -10,6 +10,13 @@ kubectl get secret hello-world-default-user -o jsonpath='{.data.username}'
 kubectl get secret hello-world-default-user -o jsonpath='{.data.password}'
 kubectl port-forward "service/hello-world" 15672
 ```
+if decode64 available (decode pass and username in base64)
+```
+kubectl get secret hello-world-default-user -o jsonpath='{.data.username}' | base64 --decode; echo
+kubectl get secret hello-world-default-user -o jsonpath='{.data.password}' | base64 --decode; echo
+kubectl port-forward "service/hello-world" 15672
+```
+
 
 for helm
 ```
